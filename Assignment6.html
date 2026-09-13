@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Random Quote Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #quote-box {
+      margin: 20px auto;
+      padding: 20px;
+      border: 2px solid #333;
+      width: 400px;
+      background: #f9f9f9;
+    }
+    #quote {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    #author {
+      font-style: italic;
+      color: #555;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Random Quote Generator</h1>
+  <div id="quote-box">
+    <p id="quote">Click the button to get a quote!</p>
+    <p id="author"></p>
+  </div>
+  <button id="new-quote">New Quote</button>
+
+  <script>
+    const quoteText = document.getElementById("quote");
+    const authorText = document.getElementById("author");
+    const newQuoteBtn = document.getElementById("new-quote");
+
+    function getQuote() {
+      fetch("https://dummyjson.com/quotes/random")
+        .then(response => response.json())
+        .then(data => {
+          quoteText.textContent = `"${data.quote}"`;
+          authorText.textContent = `— ${data.author}`;
+        })
+        .catch(error => {
+          quoteText.textContent = "Oops! Could not fetch a quote.";
+          authorText.textContent = "";
+          console.error("Error fetching quote:", error);
+        });
+    }
+
+    newQuoteBtn.addEventListener("click", getQuote);
+  </script>
+</body>
+</html>
